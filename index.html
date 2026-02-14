@@ -1,1244 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Iddion – Workforce Management Platform</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      :root {
-        --bg: #f3f4f6;
-        --surface: #ffffff;
-        --primary: #2563eb;
-        --primary-soft: #eef2ff;
-        --text-main: #0f172a;
-        --text-muted: #6b7280;
-        --border: #e5e7eb;
-        --section-bg-1: #ffffff;
-        --section-bg-2: #f8fafc;
-        --section-bg-3: #f1f5f9;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        min-height: 100vh;
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background-color: var(--bg);
-        color: var(--text-main);
-      }
-
-      .page {
-        max-width: 1120px;
-        margin: 0 auto;
-        padding: 0 1.25rem 0rem;
-      }
-
-      @media (min-width: 768px) {
-        .page {
-          padding: 0 1.75rem 0rem;
-        }
-      }
-
-      .nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .brand-mark {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 0.6rem;
-        object-fit: contain;
-        display: block;
-      }
-
-      .brand-name {
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-      }
-
-      .nav-links {
-        display: none;
-        align-items: center;
-        gap: 1.5rem;
-        font-size: 0.9rem;
-      }
-
-      @media (min-width: 960px) {
-        .nav-links {
-          display: flex;
-        }
-      }
-
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .nav-login {
-        font-size: 0.88rem;
-        color: var(--text-main);
-        background: none;
-        border: none;
-        padding: 0.4rem 0.8rem;
-        cursor: pointer;
-      }
-
-      .nav-cta {
-        font-size: 0.88rem;
-        border-radius: 999px;
-        border: none;
-        padding: 0.5rem 1.2rem;
-        background-color: var(--primary);
-        color: #ffffff;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .hero {
-        display: grid;
-        gap: 2rem;
-        align-items: center;
-        margin-bottom: 2.5rem;
-        padding: 2rem;
-        background-color: var(--section-bg-1);
-        border-radius: 1rem;
-      }
-
-      @media (min-width: 900px) {
-        .hero {
-          grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-          gap: 3rem;
-        }
-      }
-
-      .hero-tag {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.75rem;
-        border-radius: 999px;
-        background-color: #ecfdf5;
-        color: #15803d;
-        font-size: 0.78rem;
-        margin-bottom: 0.9rem;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-        line-height: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-      }
-
-      @media (min-width: 768px) {
-        .hero-title {
-          font-size: 2.4rem;
-          line-height: 2.9rem;
-        }
-      }
-
-      .hero-subtitle {
-        font-size: 0.98rem;
-        line-height: 1.7rem;
-        color: var(--text-muted);
-        max-width: 32rem;
-        margin-bottom: 1.3rem;
-      }
-
-      .hero-right {
-        background-color: var(--surface);
-        border-radius: 0.9rem;
-        border: 1px solid var(--border);
-        padding: 1.25rem;
-        box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
-      }
-
-      .hero-right-title {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 0.4rem;
-      }
-
-      .hero-right-subtitle {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-      }
-
-      .hero-contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .form-field {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .form-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-bottom: 0.3rem;
-        color: var(--text-main);
-      }
-
-      .form-input {
-        padding: 0.5rem 0.7rem;
-        border: 1px solid var(--border);
-        border-radius: 0.5rem;
-        font-size: 0.85rem;
-        font-family: inherit;
-        transition: border-color 0.2s;
-      }
-
-      .form-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-      }
-
-      .form-textarea {
-        resize: vertical;
-        min-height: 70px;
-      }
-
-      .hero-form-button {
-        border-radius: 0.5rem;
-        border: none;
-        padding: 0.6rem 1.25rem;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #ffffff;
-        background-color: var(--primary);
-        cursor: pointer;
-        transition: background-color 0.2s;
-        margin-top: 0.25rem;
-      }
-
-      .hero-form-button:hover {
-        background-color: #1d4ed8;
-      }
-
-      .trust {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 1.8rem;
-        padding: 1.5rem;
-        background-color: var(--section-bg-2);
-        border-radius: 1rem;
-        text-align: center;
-      }
-
-      .trust span {
-        font-weight: 600;
-        color: var(--text-main);
-      }
-
-      .section-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-align: center;
-        margin-top: 0;
-      }
-
-      @media (min-width: 768px) {
-        .section-title {
-          font-size: 2rem;
-        }
-      }
-
-      .section-subtitle {
-        font-size: 1rem;
-        color: var(--text-muted);
-        text-align: center;
-        margin-bottom: 1rem;
-        max-width: 42rem;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .features {
-        padding: 2rem 1.5rem;
-        display: grid;
-        gap: 1.2rem;
-        margin-bottom: 3rem;
-        background-color: var(--section-bg-1);
-        border-radius: 1rem;
-      }
-
-      @media (min-width: 768px) {
-        .features {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .features {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-      }
-
-      .feature {
-        background-color: var(--surface);
-        border-radius: 0.8rem;
-        border: 1px solid var(--border);
-        padding: 1.25rem 1rem;
-      }
-
-      .feature-title {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      .feature-text {
-        font-size: 0.875rem;
-        line-height: 1.6;
-        color: var(--text-muted);
-      }
-
-      .modules-section {
-        padding: 2rem 1.5rem;
-        margin-bottom: 3rem;
-        background-color: var(--section-bg-1);
-        border-radius: 1rem;
-      }
-
-      .modules-section .benefit-title {
-        flex-grow: 0;
-        margin-bottom: 0.5rem;
-      }
-
-      .cards-scroll-wrapper {
-        position: relative;
-      }
-
-      .cards-scroll-wrapper .benefit-cards-container {
-        overflow-x: auto;
-        scroll-behavior: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        display: flex;
-        gap: 0.6rem;
-        padding: 0rem 0;
-      }
-
-      .cards-scroll-wrapper .benefit-cards-container::-webkit-scrollbar {
-        display: none;
-      }
-
-      .cards-scroll-wrapper .benefit-card {
-        flex: 0 0 calc((100% - (3 * 0.6rem)) / 4);
-        min-width: calc((100% - (3 * 0.6rem)) / 4);
-        max-width: calc((100% - (3 * 0.6rem)) / 4);
-        scroll-snap-align: start;
-      }
 
-      @media (max-width: 1024px) {
-        .cards-scroll-wrapper .benefit-card {
-          flex: 0 0 calc((100% - (2 * 0.6rem)) / 3);
-          min-width: calc((100% - (2 * 0.6rem)) / 3);
-          max-width: calc((100% - (2 * 0.6rem)) / 3);
-        }
-      }
-
-      @media (max-width: 640px) {
-        .cards-scroll-wrapper .benefit-card {
-          flex: 0 0 100%;
-          min-width: 100%;
-          max-width: 100%;
-        }
-      }
-
-      .scroll-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 2px solid var(--border);
-        background-color: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(4px);
-        color: var(--text-main);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-        z-index: 100;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        pointer-events: auto;
-      }
-
-      .scroll-btn-left {
-        left: 8px;
-      }
-
-      .scroll-btn-right {
-        right: 8px;
-      }
-
-      .scroll-btn:hover {
-        background-color: var(--primary);
-        color: white;
-        border-color: var(--primary);
-        transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-      }
-
-      .scroll-btn:active {
-        transform: translateY(-50%) scale(0.95);
-      }
-
-      .scroll-btn svg {
-        width: 16px;
-        height: 16px;
-      }
-
-      .scroll-btn.hidden {
-        display: none;
-      }
-
-      .benefit-section {
-        padding: 2rem 1.5rem;
-        margin-bottom: 3rem;
-        background-color: var(--section-bg-2);
-        border-radius: 1rem;
-      }
-
-      .benefit-section .benefit-card {
-        cursor: default;
-      }
-
-      .benefit-section .benefit-card:hover {
-        transform: none;
-      }
-
-      .benefit-cards-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.6rem;
-        margin-top: 1.25rem;
-      }
-
-      @media (min-width: 640px) {
-        .benefit-cards-container {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .benefit-cards-container {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-
-      @media (min-width: 1280px) {
-        .benefit-cards-container {
-          grid-template-columns: repeat(4, 1fr);
-        }
-      }
-
-      .benefit-card {
-        background-color: var(--surface);
-        border-radius: 0.8rem;
-        border: 2px solid var(--border);
-        padding: 0;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-
-      .benefit-card:hover {
-        border-color: var(--primary);
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
-        transform: translateY(-2px);
-      }
-
-      .benefit-card:nth-child(2) {
-        border-color: #10b981;
-      }
-
-      .benefit-image {
-        width: 100%;
-        flex-shrink: 0;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        position: relative;
-        padding: 1.5rem;
-        min-height: 180px;
-      }
-
-      .benefit-card-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .benefit-image:has(.benefit-card-image) {
-        padding: 0;
-        background: transparent;
-      }
-
-      .bar-chart-icon {
-        width: 60px;
-        height: 60px;
-        background: white;
-        border: 2px solid #1f2937;
-        border-radius: 4px;
-        padding: 8px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-around;
-        gap: 6px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .bar {
-        width: 12px;
-        background: #10b981;
-        border-radius: 2px 2px 0 0;
-        position: relative;
-      }
-
-      .bar:nth-child(1) {
-        height: 60%;
-        background: #10b981;
-      }
-
-      .bar:nth-child(2) {
-        height: 35%;
-        background: #ef4444;
-      }
-
-      .bar:nth-child(3) {
-        height: 80%;
-        background: #3b82f6;
-      }
-
-      .bar-chart-grid {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-image: 
-          linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-        background-size: 100% 20%;
-        pointer-events: none;
-      }
-
-      .dummy-image {
-        font-size: 3rem;
-        opacity: 0.9;
-      }
-
-      .benefit-card:nth-child(1) .benefit-image {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-
-      .benefit-card:nth-child(2) .benefit-image {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-
-      .benefit-card:nth-child(3) .benefit-image {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      }
-
-      .benefit-card:nth-child(4) .benefit-image {
-        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-      }
-
-      .benefit-content {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-      }
-
-      .benefit-title {
-        font-size: 1rem;
-        font-weight: 600;
-        flex-grow: 1;
-        margin-bottom: 0.5rem;
-      }
-
-      .benefit-cta {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        margin-top: auto;
-      }
-
-      .btn-secondary {
-        border-radius: 999px;
-        border: 1px solid var(--primary);
-        padding: 0.45rem 1rem;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--primary);
-        background-color: var(--surface);
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        white-space: nowrap;
-        pointer-events: auto;
-      }
-
-      .btn-secondary:hover {
-        background-color: var(--primary-soft);
-      }
-
-      .contact-info {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      .nav-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      .nav-links a:hover {
-        color: var(--text-main);
-      }
-
-      .footer {
-        padding: 2rem 1.5rem 2rem;
-         border-top: 1px solid var(--border);
-        /* background-color: var(--section-bg-2);  */
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDDION - Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-family-sans: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+      --font-size-base: 15px;
+      --line-height-base: 1.5;
+      --letter-spacing-base: 0.01em;
+    }
 
-      .footer p {
-        font-size: 0.875rem;
-        color: var(--text-muted);
-        margin: 0;
-        line-height: 1.6;
-      }
+    /* Hide all scrollbars globally */
+    html {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
 
-      .footer p span {
-        color: var(--text-main);
-        font-weight: 500;
-      }
+    html::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
 
-      /* Popup Modal */
-      .popup-modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
-      }
+    body {
+      font-family: var(--font-family-sans);
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
 
-      .popup-content {
-        background-color: var(--surface);
-        margin: auto;
-        padding: 2rem;
-        border-radius: 1rem;
-        max-width: 600px;
-        width: 90%;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        position: relative;
-      }
+    body::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
 
-      .popup-close {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        font-size: 2rem;
-        font-weight: bold;
-        color: var(--text-muted);
-        cursor: pointer;
-        line-height: 1;
-      }
+    * {
+      font-family: var(--font-family-sans);
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
 
-      .popup-close:hover {
-        color: var(--text-main);
-      }
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
 
-      .popup-image {
-        width: 100%;
-        height: 200px;
-        margin-bottom: 1.5rem;
-        border-radius: 0.5rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    /* Animations */
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
       }
 
-      .popup-content h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: var(--text-main);
+      50% {
+        background-position: 100% 50%;
       }
 
-      .popup-content p {
-        font-size: 1rem;
-        line-height: 1.6;
-        color: var(--text-secondary);
-        margin-bottom: 1.5rem;
+      100% {
+        background-position: 0% 50%;
       }
+    }
 
-      .popup-features {
-        margin-bottom: 1.5rem;
-      }
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
 
-      .popup-features h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        color: var(--text-main);
-      }
+    @keyframes pulse {
 
-      .popup-features ul {
-        list-style: none;
-        padding: 0;
+      0%,
+      100% {
+        opacity: 0.5;
       }
 
-      .popup-features li {
-        padding: 0.5rem 0;
-        padding-left: 1.5rem;
-        position: relative;
-        color: var(--text-secondary);
+      50% {
+        opacity: 0.8;
       }
+    }
 
-      .popup-features li:before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: var(--primary);
-        font-weight: bold;
-      }
+    .animate-pulse {
+      animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
 
-      .popup-button {
-        width: 100%;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: white;
-        background-color: var(--primary);
-        border: none;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
+    .delay-1000 {
+      animation-delay: 1s;
+    }
 
-      .popup-button:hover {
-        background-color: #1d4ed8;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <header class="nav" aria-label="Main navigation">
-        <div class="nav-left">
-          <img src="public/images/logoiddion.png" alt="Iddion Logo" class="brand-mark" />
-        </div>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#features">Product</a>
-          <a href="#modules">Solutions</a>
-          <a href="#modules">Learn More</a>
-        </nav>
-        <div class="nav-right">
-          <!-- <button
-            class="nav-login"
-            type="button"
-            onclick="window.location.href='login.html';"
-          >
-            Log in
-          </button> -->
-          <button
-            class="nav-cta"
-            type="button"
-            onclick="window.location.href='https://management.clms.in';"
-          >
-            Get started
-          </button>
-        </div>
-      </header>
-
-      <main aria-label="Iddion home">
-        <section class="hero">
-          <div>
-            <div class="hero-tag">One Unified Platform for Complete Control</div>
-            <h1 class="hero-title">
-              Turn Compliance Challenges into Opportunities with Automated CLMS and Eliminate Manual Effort
-            </h1>
-            <p class="hero-subtitle">
-              Transform your workforce management with smart automation. Streamline contractor onboarding, payroll, attendance, and compliance reporting—all in one platform.
-            </p>
-          </div>
-
-          <aside class="hero-right" aria-label="Contact form">
-            <div class="hero-right-title">Get in Touch</div>
-            <p class="hero-right-subtitle">Share your details and our team will get in touch with you.</p>
-            <form class="hero-contact-form" onsubmit="event.preventDefault(); sendToWhatsApp();">
-              <div class="form-field">
-                <label class="form-label" for="hero-name">Your Name</label>
-                <input class="form-input" type="text" id="hero-name" name="name" required />
-              </div>
-              <div class="form-field">
-                <label class="form-label" for="hero-message">Your Message</label>
-                <textarea class="form-input form-textarea" id="hero-message" name="message" rows="4" required></textarea>
-              </div>
-              <button type="submit" class="hero-form-button">Submit</button>
-            </form>
-          </aside>
-        </section>
-
-        <p class="trust">
-          Trusted by <span>500+ companies</span> to manage their workforce operations efficiently and compliantly.
-        </p>
-
-        <section class="benefit-section" id="modules">
-          <h2 class="section-title">Our Comprehensive Modules</h2>
-          <p class="section-subtitle">
-            AI-Powered Compliance Monitoring, Geo-Fencing, Automated Blacklisting, e-KYC, Advanced Reporting, Voice &amp; Chatbot Support, and more.
-          </p>
-          <div class="cards-scroll-wrapper">
-            <button type="button" class="scroll-btn scroll-btn-left" onclick="scrollCards('modules', 'left'); return false;" aria-label="Scroll left">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M15 18l-6-6 6-6"/>
-              </svg>
-            </button>
-            <div class="benefit-cards-container" id="modules-cards">
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/compliance.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Compliance &amp; Regulations</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/time-attendance.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Time, Attendance &amp; Leave</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/kye-employee.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">KYE - Employee Verification</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/visitor-pass.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Visitor Management</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/labour-management.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Canteen Management</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/labour-management.png" alt="Smart Access Control" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Labour Management</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Contact Us</a>
-                </div>
-              </div>
-            </div>
-            </div>
-            <button type="button" class="scroll-btn scroll-btn-right" onclick="scrollCards('modules', 'right'); return false;" aria-label="Scroll right">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
-            </button>
-          </div>
-        </section>
-
-        <section class="benefit-section">
-          <h2 class="section-title">Transform Contract Labour Management with Smart Automation</h2>
-          <p class="section-subtitle">
-            AI-Powered Compliance Monitoring, Geo-Fencing, Automated Blacklisting, e-KYC, Advanced Reporting, Voice &amp; Chatbot Support, and more.
-          </p>
-          
-          <div class="benefit-cards-container">
-            <div class="benefit-card">
-              <div class="benefit-image">
-                <img src="public/images/no-more.png" alt="No More Ghost Employees" class="benefit-card-image">
-              </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">No More Ghost Employees</h3>
-                <div class="benefit-cta">
-                    <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Get More information</a>
-                  </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-image">
-                    <img src="public/images/samrt-access.png" alt="Smart Access Control" class="benefit-card-image">
-                  </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">Smart Access Control</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Get More information</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-image">
-                    <img src="public/images/esg-aligned.png" alt="Smart Access Control" class="benefit-card-image">
-                  </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">ESG-Aligned Compliance</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Get More information</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="benefit-card">
-                <div class="benefit-image">
-                    <img src="public/images/ai-power.png" alt="Smart Access Control" class="benefit-card-image">
-                  </div>
-              <div class="benefit-content">
-                <h3 class="benefit-title">AI-Powered Monitoring</h3>
-                <div class="benefit-cta">
-                  <a href="https://wa.me/919986221151" target="_blank" class="btn-secondary">Get More information</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="features" id="features" aria-label="Why Iddion">
-          <h2 class="section-title">Why Iddion?</h2>
-          <article class="feature">
-            <h2 class="feature-title">Data-Driven Decision Making</h2>
-            <p class="feature-text">
-              Leverage real-time analytics and AI-driven insights to optimize workforce productivity and operational efficiency. AI-driven attendance monitoring, geo-tagging, and facial recognition ensure accurate contractor management.
-            </p>
-          </article>
-          <article class="feature">
-            <h2 class="feature-title">Security &amp; Compliance First</h2>
-            <p class="feature-text">
-              We ensure high security and compliance with regulatory standards, making workforce tracking seamless while maintaining legal transparency.
-            </p>
-          </article>
-          <article class="feature">
-            <h2 class="feature-title">Scalable &amp; Customizable</h2>
-            <p class="feature-text">
-              Our solutions cater to businesses of all sizes—whether you need on-premise, cloud, or hybrid deployment, Iddion adapts to your needs.
-            </p>
-          </article>
-          <article class="feature">
-            <h2 class="feature-title">Advanced Hardware &amp; Software Integration</h2>
-            <p class="feature-text">
-              Seamlessly integrate our biometric devices, access control, and attendance tracking with HRMS, payroll, and ERP systems.
-            </p>
-          </article>
-          <article class="feature">
-            <h2 class="feature-title">End-to-End Compliance Automation</h2>
-            <p class="feature-text">
-              Streamline contractor onboarding, payroll, attendance, and compliance reporting—all in one platform.
-            </p>
-          </article>
-        </section>
-
-      </main>
-      <footer class="footer">
-        <p>
-          &copy; <span id="year"></span> <strong>Iddion Platform</strong>. All rights reserved.
-        </p>
-      </footer>
-
-    </div>
-
-    <!-- Popup Modal -->
-    <div id="popupModal" class="popup-modal">
-      <div class="popup-content">
-        <span class="popup-close" onclick="closePopup()">&times;</span>
-        <div class="popup-image">
-          <div class="bar-chart-icon" id="popupImage">
-            <div class="bar-chart-grid"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-          </div>
-        </div>
-        <h2 id="popupTitle"></h2>
-        <p id="popupDescription"></p>
-        <div class="popup-features">
-          <h3>Key Features:</h3>
-          <ul id="popupFeatures"></ul>
-        </div>
-        <button class="popup-button" onclick="window.location.href='login.html';">Start A Project</button>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .scale-in {
+      animation: scaleIn 0.5s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+
+    .fade-in-delay-1 {
+      animation: fadeInUp 0.5s ease-out 0.3s forwards;
+      opacity: 0;
+    }
+
+    .fade-in-delay-2 {
+      animation: fadeIn 0.5s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    .fade-in-delay-3 {
+      animation: fadeInUp 0.5s ease-out 0.6s forwards;
+      opacity: 0;
+    }
+
+    .slide-in-right {
+      animation: slideInRight 0.5s ease-out 0.4s forwards;
+      opacity: 0;
+    }
+
+    .fade-in-delay-4 {
+      animation: fadeIn 0.5s ease-out 0.8s forwards;
+      opacity: 0;
+    }
+
+    .button-shine {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hover-scale-button:hover {
+      transform: scale(1.02);
+    }
+
+    .hover-scale-button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+
+<body>
+  <div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#001233] via-[#002366] to-[#001233] relative overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#001233]/50 via-[#002366]/50 to-[#001233]/50"></div>
+      <!-- Animated circles -->
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0061ff]/5 rounded-full blur-3xl animate-pulse"></div>
+      <div
+        class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#3385ff]/5 rounded-full blur-3xl animate-pulse delay-1000">
       </div>
     </div>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
+    <!-- Main content -->
+    <div
+      class="w-full max-w-5xl mx-4 bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden border border-[#0061ff]/10 fade-in-up">
+      <!-- Left: Login Form -->
+      <div class="w-full md:w-3/5 flex flex-col justify-center items-center p-6 md:p-10 relative">
+        <!-- Decorative corner elements -->
+        <div class="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-[#0061ff]/20 rounded-tl-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-[#0061ff]/20 rounded-br-3xl"></div>
 
-      function sendToWhatsApp() {
-        const name = document.getElementById('hero-name').value.trim();
-        const message = document.getElementById('hero-message').value.trim();
-        
-        if (!name || !message) {
-          alert('Please fill in all fields.');
-          return;
-        }
-        
-        // Format the message for WhatsApp
-        const whatsappMessage = `Hello! I'm interested in Iddion Platform.\n\nName: ${name}\n\nMessage: ${message}`;
-        
-        // Encode the message for URL
-        const encodedMessage = encodeURIComponent(whatsappMessage);
-        
-        // WhatsApp URL with phone number
-        const whatsappUrl = `https://wa.me/919986221151?text=${encodedMessage}`;
-        
-        // Open WhatsApp in a new tab
-        window.open(whatsappUrl, '_blank');
-        
-        // Clear the form
-        document.getElementById('hero-name').value = '';
-        document.getElementById('hero-message').value = '';
-      }
+        <!-- IDDION Logo with animation -->
+        <div class="mb-6 relative scale-in">
+          <div class="absolute -inset-4 bg-[#0061ff]/5 rounded-full blur-xl"></div>
+          <img src="/public/images/logoiddion.png" alt="IDDION Logo"
+            class="h-auto w-36 transform hover:scale-105 transition-transform duration-300 relative z-10" />
+        </div>
 
-      function updateScrollButtons(section) {
-        const container = document.getElementById(section + '-cards');
-        if (!container) return;
-        
-        const leftBtn = container.parentElement.querySelector('.scroll-btn-left');
-        const rightBtn = container.parentElement.querySelector('.scroll-btn-right');
-        
-        if (!leftBtn || !rightBtn) return;
-        
-        const scrollLeft = container.scrollLeft;
-        const scrollWidth = container.scrollWidth;
-        const clientWidth = container.clientWidth;
-        const isAtStart = scrollLeft <= 0;
-        const isAtEnd = scrollLeft >= scrollWidth - clientWidth - 1; // -1 for rounding errors
-        
-        if (isAtStart) {
-          leftBtn.classList.add('hidden');
-        } else {
-          leftBtn.classList.remove('hidden');
-        }
-        
-        if (isAtEnd) {
-          rightBtn.classList.add('hidden');
-        } else {
-          rightBtn.classList.remove('hidden');
-        }
-      }
+        <div class="text-center relative mb-8 fade-in-delay-1">
+          <div class="absolute -inset-4 bg-gradient-to-r from-[#0061ff]/5 to-[#3385ff]/5 rounded-2xl blur-lg"></div>
+          <h1
+            class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#0061ff] to-[#3385ff] bg-clip-text text-transparent mb-3 relative z-10">
+            Welcome to IDDION
+          </h1>
+          <p class="text-base md:text-lg text-gray-600 relative z-10">
+            Sign in to access your workforce platform
+          </p>
+        </div>
 
-      function scrollCards(section, direction) {
-        const container = document.getElementById(section + '-cards');
-        if (!container) {
-          console.error('Container not found:', section + '-cards');
-          return;
-        }
-        
-        const firstCard = container.querySelector('.benefit-card');
-        if (!firstCard) {
-          console.error('No cards found in container');
-          return;
-        }
-        
-        const cardWidth = firstCard.offsetWidth;
-        const gap = 0.6 * 16; // 0.6rem in pixels
-        // Scroll by one card at a time
-        const scrollAmount = cardWidth + gap;
-        
-        const currentScroll = container.scrollLeft;
-        let newScroll = direction === 'left' 
-          ? currentScroll - scrollAmount 
-          : currentScroll + scrollAmount;
-        
-        // Ensure we don't scroll past boundaries
-        newScroll = Math.max(0, Math.min(newScroll, container.scrollWidth - container.clientWidth));
-        
-        container.scrollLeft = newScroll;
-        
-        // Update button visibility after scrolling
-        setTimeout(() => updateScrollButtons(section), 10);
-      }
+        <!-- Login Buttons -->
+        <div class="w-full max-w-sm space-y-3">
+          <!-- IDDION Login Button -->
+          <button onclick="handleKeycloakLogin()" id="loginButton"
+            class="group relative w-full bg-gradient-to-r from-[#0061ff] to-[#3385ff] hover:from-[#004dc7] hover:to-[#0061ff] text-white font-semibold py-3 md:py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden button-shine hover-scale-button">
+            <!-- Button shine effect -->
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000">
+            </div>
 
-      // Initialize button visibility
-      function initScrollButtons() {
-        const modulesContainer = document.getElementById('modules-cards');
-        if (modulesContainer) {
-          updateScrollButtons('modules');
-          
-          // Update buttons on scroll
-          modulesContainer.addEventListener('scroll', function() {
-            updateScrollButtons('modules');
-          });
-          
-          // Update buttons on window resize
-          window.addEventListener('resize', function() {
-            updateScrollButtons('modules');
-          });
-        }
-      }
+            <div id="loginButtonContent" class="flex items-center gap-3">
+              <div class="relative w-6 h-6">
+                <div class="absolute inset-0 bg-white rounded-full shadow-inner"></div>
+                <span class="absolute inset-0 flex items-center justify-center text-[#0061ff] font-bold text-xs">
+                  IN
+                </span>
+              </div>
+              <span class="text-base md:text-lg">Sign in with IDDION</span>
+            </div>
+          </button>
+        </div>
 
-      // Initialize immediately if DOM is ready, otherwise wait
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initScrollButtons);
-      } else {
-        initScrollButtons();
-      }
+        <!-- Additional Info -->
+        <p class="mt-6 text-sm text-gray-500 flex items-center gap-2 fade-in-delay-2">
+          <svg class="w-4 h-4 text-[#0061ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          Secure access to your workforce management platform
+        </p>
+      </div>
 
-      const cardData = [
-        {
-          title: "No More Ghost Employees",
-          description: "Eliminate ghost employees with biometric authentication, real-time tracking, and geofencing. Automated payroll and audit trails ensure accurate records, prevent fraud, and keep your workforce fully compliant—promoting accuracy, accountability, and a secure workforce environment.",
-          image: "📊",
-          features: [
-            "Biometric authentication",
-            "Real-time tracking",
-            "Geofencing technology",
-            "Automated payroll",
-            "Audit trails"
-          ]
-        },
-        {
-          title: "Smart Access Control",
-          description: "Ensure only authorized personnel access your premises with real-time movement tracking and intelligent, contract-based entry rules. Our system helps prevent pilferage, reduce theft, and eliminate misuse of resources — creating a secure and accountable work environment.",
-          image: "🔒",
-          features: [
-            "Real-time movement tracking",
-            "Contract-based entry rules",
-            "Access control systems",
-            "Theft prevention",
-            "Resource management"
-          ]
-        },
-        {
-          title: "ESG-Aligned Compliance",
-          description: "Stay aligned with region-specific compliance norms and labor laws while fostering a safe and transparent workplace. The system supports ethical labor practices and reinforces the Social and Governance pillars of your ESG commitments.",
-          image: "✅",
-          features: [
-            "Region-specific compliance",
-            "Labor law adherence",
-            "Ethical labor practices",
-            "ESG reporting",
-            "Transparent workplace"
-          ]
-        },
-        {
-          title: "AI-Powered Monitoring",
-          description: "Automated compliance tracking with AI-driven insights and real-time alerts. Leverage advanced analytics to optimize workforce productivity and operational efficiency with intelligent monitoring systems.",
-          image: "🤖",
-          features: [
-            "AI-driven insights",
-            "Real-time alerts",
-            "Automated compliance tracking",
-            "Advanced analytics",
-            "Intelligent monitoring"
-          ]
-        }
-      ];
+      <!-- Right: Illustration/Info -->
+      <div
+        class="hidden md:flex flex-col justify-center items-center w-2/5 bg-gradient-to-br from-[#001233] via-[#002366] to-[#001233] p-8 md:p-10 relative overflow-hidden">
+        <!-- Animated gradient overlay -->
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-[#0061ff]/10 via-[#3385ff]/10 to-[#0061ff]/10 animate-gradient">
+        </div>
 
-      function openPopup(index) {
-        const data = cardData[index];
-        document.getElementById("popupTitle").textContent = data.title;
-        document.getElementById("popupDescription").textContent = data.description;
-        document.getElementById("popupImage").textContent = data.image;
-        
-        const featuresList = document.getElementById("popupFeatures");
-        featuresList.innerHTML = "";
-        data.features.forEach(feature => {
-          const li = document.createElement("li");
-          li.textContent = feature;
-          featuresList.appendChild(li);
-        });
+        <!-- Content -->
+        <div class="relative z-10 text-center slide-in-right">
+          <h2 class="text-2xl md:text-3xl text-white font-bold mb-4 leading-tight">
+            Empower your workforce<br />
+            <span class="bg-gradient-to-r from-[#0061ff] to-[#3385ff] bg-clip-text text-transparent">with
+              confidence</span>
+          </h2>
+          <p class="text-base md:text-lg text-white/90 mb-6 leading-relaxed">
+            Your all-in-one workforce platform delivering control, compliance, and efficiency.
+          </p>
+          <div class="relative fade-in-delay-3">
+            <div class="absolute -inset-4 bg-[#0061ff]/10 rounded-2xl blur-xl"></div>
+            <img src="/public/images/logindashboard.png" alt="Dashboard Illustration"
+              class="w-64 md:w-72 h-auto object-contain rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300 relative z-10" />
+          </div>
+        </div>
 
-        document.getElementById("popupModal").style.display = "flex";
-      }
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-48 h-48 bg-[#0061ff]/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-[#3385ff]/10 rounded-full blur-3xl animate-pulse delay-1000">
+        </div>
+      </div>
+    </div>
 
-      function closePopup() {
-        document.getElementById("popupModal").style.display = "none";
-      }
+    <!-- Footer -->
+    <div class="absolute bottom-4 text-white/60 text-xs flex items-center gap-2 fade-in-delay-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#0061ff]"></span>
+      © <span id="currentYear"></span> IDDION Platform. All rights reserved.
+    </div>
+  </div>
 
-      window.onclick = function(event) {
-        const modal = document.getElementById("popupModal");
-        if (event.target == modal) {
-          closePopup();
-        }
-      }
-    </script>
-  </body>
+  <script>
+    // Set current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Handle Keycloak Login
+    function handleKeycloakLogin() {
+      const button = document.getElementById('loginButton');
+      const buttonContent = document.getElementById('loginButtonContent');
+
+      // Disable button
+      button.disabled = true;
+
+      // Show loading state
+      buttonContent.innerHTML = `
+        <div class="flex items-center gap-2">
+          <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          <span class="text-base md:text-lg">Signing in...</span>
+        </div>
+      `;
+
+      // Redirect to Keycloak authentication
+      window.location.href = 'http://122.166.245.97:8080/realms/inops/protocol/openid-connect/auth?client_id=gateway-client&scope=openid%20email%20profile%20groups%20roles&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fkeycloak&state=qxArpt_-6at7wMnzxxtYa5X0b2-vGh0xHKlTpn5ct9E&code_challenge=bognt05q2idX8LtVrKx7UKlQTQsvvtdsPOa0Z2wWLHk&code_challenge_method=S256';
+    }
+  </script>
+</body>
+
 </html>
